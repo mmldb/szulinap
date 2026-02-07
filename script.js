@@ -12,39 +12,37 @@ function getNextBirthday(birthDateString) {
     return nextBday;
 }
 
-// --- 1. KÍNAI HOROSZKÓP ADATBÁZIS (Generált) ---
-// A születési év maradéka (year % 12) alapján
+// --- 1. KÍNAI HOROSZKÓP ADATBÁZIS ---
 const zodiacSigns = [
-    { name: "Majom", icon: "🐒", text: "Zseniális problémamegoldó vagy, idén a kreativitásod hoz sikert." },      // 0
-    { name: "Kakas", icon: "🐓", text: "A pontosságod és szorgalmad idén végre nagy elismerést vált ki." },      // 1
-    { name: "Kutya", icon: "🐕", text: "Hűséges barátaid idén mindenben támogatnak. Harmonikus év vár rád." },   // 2
-    { name: "Disznó", icon: "🐖", text: "Élvezd az életet! A szerencse most melléd szegődik, használd ki." },     // 3
-    { name: "Patkány", icon: "🐀", text: "Leleményességeddel minden akadályt legyőzöl és anyagilag gyarapodsz." },// 4
-    { name: "Bivaly", icon: "🐂", text: "A kemény munka beérik. Amit idén felépítesz, az tartós marad." },        // 5
-    { name: "Tigris", icon: "🐅", text: "Vezetésre születtél. Idén bátorságod új kalandok felé repít." },         // 6
-    { name: "Nyúl", icon: "🐇", text: "A diplomáciai érzéked aranyat ér. Békés, nyugodt időszak következik." },   // 7
-    { name: "Sárkány", icon: "🐉", text: "Erőd és karizmád hegyeket mozgat meg. Merj idén nagyot álmodni!" },     // 8
-    { name: "Kígyó", icon: "🐍", text: "Bölcs döntéseket hozol. Hallgass a megérzéseidre, nem csapnak be." },     // 9
-    { name: "Ló", icon: "🐎", text: "Szabadságvágyad hajt előre. Ez az év a nagy utazásokról szólhat." },        // 10
-    { name: "Kecske", icon: "🐐", text: "Művészi vénád szárnyal. Most érdemes valami új hobbiba fogni!" }         // 11
+    { name: "Majom", icon: "🐒", text: "Zseniális problémamegoldó vagy, kreativitásod sikert hoz." },      
+    { name: "Kakas", icon: "🐓", text: "Pontosságod és szorgalmad nagy elismerést vált ki." },      
+    { name: "Kutya", icon: "🐕", text: "Hűséges barátaid mindenben támogatnak." },   
+    { name: "Disznó", icon: "🐖", text: "Élvezd az életet! A szerencse most melléd szegődik." },     
+    { name: "Patkány", icon: "🐀", text: "Leleményességeddel minden akadályt legyőzöl." },
+    { name: "Bivaly", icon: "🐂", text: "A kemény munka beérik, amit építesz, tartós lesz." },        
+    { name: "Tigris", icon: "🐅", text: "Vezetésre születtél, bátorságod új kalandok felé repít." },         
+    { name: "Nyúl", icon: "🐇", text: "Diplomáciai érzéked aranyat ér, békés időszak jön." },   
+    { name: "Sárkány", icon: "🐉", text: "Erőd hegyeket mozgat meg. Merj nagyot álmodni!" },     
+    { name: "Kígyó", icon: "🐍", text: "Bölcs döntéseket hozol, hallgass a megérzéseidre." },     
+    { name: "Ló", icon: "🐎", text: "Szabadságvágyad hajt, ez az év a nagy utazásoké." },        
+    { name: "Kecske", icon: "🐐", text: "Művészi vénád szárnyal, kezdj új hobbiba!" }         
 ];
 
-// --- 2. HÍRESSÉGEK (Generáció-független ikonok) ---
-// Kézzel párosítva a családtagok évéhez, hogy biztosan stimmeljen
+// --- 2. HÍRESSÉGEK ---
 const celebDatabase = {
-    "Mammy": "Ryan Reynolds",        // 1976 (Sárkány)
-    "Papi":  "Robin Williams",       // 1951 (Nyúl)
-    "Juli":  "Arnold Schwarzenegger",// 2007 (Disznó) - Vicces kontraszt
-    "Cila":  "Rihanna",              // 1988 (Sárkány)
-    "Andris": "Cristiano Ronaldo",   // 1985 (Bivaly) - Mindenki ismeri
-    "Zsófi": "Taylor Swift",         // 2025 (Kígyó) - A legnagyobb sztár most
-    "Orsi":  "Ed Sheeran",           // 1991 (Kecske)
-    "Marci": "Leonardo DiCaprio",    // 2022 (Tigris) - Örök klasszikus
-    "Misi":  "Lionel Messi",         // 2025/1987 (Nyúl/Kígyó) - Messi mindenhol jó
-    "Bukis": "Emma Watson"           // 1990 (Ló) - Harry Potter miatt mindenki ismeri
+    "Mammy": "Ryan Reynolds",        
+    "Papi":  "Robin Williams",       
+    "Juli":  "Arnold Schwarzenegger",
+    "Cila":  "Rihanna",              
+    "Andris": "Cristiano Ronaldo",   
+    "Zsófi": "Taylor Swift",         
+    "Orsi":  "Ed Sheeran",           
+    "Marci": "Leonardo DiCaprio",    
+    "Misi":  "Lionel Messi",         
+    "Bukis": "Emma Watson"           
 };
 
-// --- ANIMÁCIÓ (Counter) ---
+// --- ANIMÁCIÓ ---
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
     const duration = 1500; 
@@ -68,7 +66,6 @@ function animateCounters() {
             if (progress < 1) {
                 requestAnimationFrame(step);
             } else {
-                // Végleges pontos érték
                 const finalVal = isFloat ? target.toLocaleString('hu-HU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : target.toLocaleString('hu-HU');
                 counter.innerText = finalVal;
             }
@@ -101,38 +98,24 @@ fetch('adatok.json')
         if (processedData.length === 0) return;
 
         const nextPerson = processedData[0];
-        const gridContainer = document.getElementById('dashboard-grid');
 
         // --- STATISZTIKÁK SZÁMOLÁSA ---
         const diffInTime = today.getTime() - nextPerson.birthDateObj.getTime();
         const daysAlive = Math.floor(diffInTime / (1000 * 3600 * 24));
         
-        // 1. Kaki (Babáknak kevesebb)
         const poopMultiplier = (nextPerson.turningAge < 2) ? 0.15 : 0.35;
         const poopAmount = daysAlive * poopMultiplier; 
-
-        // 2. Puki
         const farts = Math.floor((daysAlive * 1.2) / 14); 
-
-        // 3. Alvás
         const sleepYears = ((daysAlive / 365) / 3); 
-        
-        // 4. Elefánt (Kaja)
         const elephantsEaten = ((daysAlive * 1.8) / 6000); 
 
-        // 5. Horoszkóp generálása (Évszám alapján)
-        // A kínai horoszkóp 12 éves ciklus, 0-tól indul. 
-        // A "zodiacSigns" tömböm sorrendje a maradékos osztáshoz van igazítva.
+        // Horoszkóp
         const zodiacIndex = nextPerson.birthYear % 12;
         const myZodiac = zodiacSigns[zodiacIndex];
-
-        // 6. Híresség keresése
         const myCeleb = celebDatabase[nextPerson.name] || "Ismeretlen sztár";
 
-        // --- HTML ÉPÍTÉS (Vissza a referenciaképhez!) ---
-        
-        // FŐ KÁRTYA (Külön divben)
-        document.querySelector('.container').innerHTML = `
+        // --- 1. FŐKÁRTYA BEILLESZTÉSE ---
+        const focusHTML = `
             <div class="top-label"><span>Következő ünnepelt</span></div>
             <div class="main-card">
                 <div class="main-name">${nextPerson.name}</div>
@@ -140,14 +123,10 @@ fetch('adatok.json')
                     <span class="counter" data-target="${nextPerson.daysLeft}">0</span> nap múlva ${nextPerson.turningAge} éves!
                 </div>
             </div>
-            
-            <div id="dashboard-grid" class="dashboard-grid">
-                </div>
-
-            <div id="list-container" class="list-container"></div>
         `;
+        document.getElementById('focus-container').innerHTML = focusHTML;
 
-        // KIS KÁRTYÁK
+        // --- 2. RÁCS BEILLESZTÉSE ---
         const gridHTML = `
             <div class="card bg-blue">
                 <div class="stat-icon">🌍</div>
@@ -199,11 +178,12 @@ fetch('adatok.json')
                 </div>
             </div>
         `;
-
         document.getElementById('dashboard-grid').innerHTML = gridHTML;
+
+        // Animáció indítása
         animateCounters();
 
-        // Lista alul
+        // --- 3. LISTA BEILLESZTÉSE ---
         const listContainer = document.getElementById('list-container');
         processedData.slice(1).forEach(person => {
             const div = document.createElement('div');
@@ -216,4 +196,7 @@ fetch('adatok.json')
         });
 
     })
-    .catch(error => console.error('Hiba:', error));
+    .catch(error => {
+        console.error('Hiba:', error);
+        document.getElementById('focus-container').innerHTML = '<p style="text-align:center; color:red;">Hiba történt az adatok betöltésekor. Ellenőrizd a konzolt!</p>';
+    });
