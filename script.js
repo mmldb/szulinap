@@ -46,16 +46,27 @@ fetch('adatok.json')
         const nextPerson = processedData[0];
         const focusContainer = document.getElementById('focus-card');
 
-        // Vicces statisztikák számolása
+        // --- STATISZTIKÁK SZÁMOLÁSA ---
         const diffInTime = today.getTime() - nextPerson.birthDateObj.getTime();
         const daysAlive = Math.floor(diffInTime / (1000 * 3600 * 24)); // Hány napja él
 
-        // ÚJ STATISZTIKA: Kaki kalkulátor (napi 0.35 kg átlaggal)
+        // 1. Kaki kalkulátor (napi 0.35 kg)
         const poopAmount = (daysAlive * 0.35).toLocaleString('hu-HU', {maximumFractionDigits: 0});
 
-        const breaths = (daysAlive * 1440 * 16).toLocaleString('hu-HU'); // 16 légzés/perc
-        const heartBeats = (daysAlive * 1440 * 80).toLocaleString('hu-HU'); // 80 szívverés/perc
-        const sleepYears = ((daysAlive / 365) / 3).toFixed(1); // Élet 1/3-a alvás
+        // 2. Fingós stat (Lufi egyenérték)
+        // Átlag napi 1.2 liter gáz / 14 literes lufi
+        const fartsInBalloons = Math.floor((daysAlive * 1.2) / 14).toLocaleString('hu-HU');
+
+        // 3. WC-n töltött idő
+        // Napi 20 perc átlagosan -> hány nap jön ki belőle?
+        const toiletDays = Math.floor((daysAlive * 20) / 1440); 
+
+        // 4. Elfogyasztott elefántok
+        // Napi 1.8 kg kaja / 6000 kg (afrikai elefánt súlya)
+        const elephantsEaten = ((daysAlive * 1.8) / 6000).toFixed(2);
+
+        // Alvás (marad, mert durva adat)
+        const sleepYears = ((daysAlive / 365) / 3).toFixed(1);
 
         focusContainer.innerHTML = `
             <h2>${nextPerson.name}</h2>
@@ -71,27 +82,27 @@ fetch('adatok.json')
                     kb. ${poopAmount} kg 💩
                 </div>
                 <div class="stat-item">
-                    <strong>Szívdobbanások</strong>
-                    ${heartBeats}
+                    <strong>Gáztermelésed</strong>
+                    ${fartsInBalloons} db lufit fújna fel 🎈
                 </div>
                 <div class="stat-item">
-                    <strong>Légvételek száma</strong>
-                    ${breaths}
+                    <strong>WC-n töltött idő</strong>
+                    ${toiletDays} teljes nap 🚽
+                </div>
+                <div class="stat-item">
+                    <strong>Ennyit ettél meg</strong>
+                    ${elephantsEaten} db afrikai elefánt 🐘
                 </div>
                 <div class="stat-item">
                     <strong>Alvással töltött idő</strong>
                     ${sleepYears} év 😴
-                </div>
-                <div class="stat-item">
-                    <strong>Szülinapi torták</strong>
-                    ${nextPerson.turningAge - 1} db elfogyasztva
                 </div>
             </div>
         `;
 
         // 3. A többi ember listázása
         const listContainer = document.getElementById('list-container');
-        listContainer.innerHTML = ''; // Törlés először
+        listContainer.innerHTML = ''; 
         
         processedData.slice(1).forEach(person => {
             const div = document.createElement('div');
@@ -105,5 +116,5 @@ fetch('adatok.json')
     })
     .catch(error => {
         console.error('Hiba az adatok betöltésekor:', error);
-        document.getElementById('list-container').innerHTML = '<p style="color:red">Nem sikerült betölteni az adatokat. Ellenőrizd az adatok.json fájlt!</p>';
+        document.getElementById('list-container').innerHTML = '<p style="color:red">Hiba: Nem találom az adatok.json fájlt!</p>';
     });
