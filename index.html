@@ -6,7 +6,12 @@
     <title>Családi Szülinapok</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FF6B6B">
+    <meta name="theme-color" content="#FFD93D">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <link rel="apple-touch-icon" href="icon-192.png"> 
 </head>
 <body>
@@ -16,21 +21,20 @@
             <h1>🎉 Következő Ünnepelt 🎉</h1>
         </header>
 
-        <div id="focus-card" class="card focus-mode">
-            </div>
+        <div id="focus-card" class="card focus-card">
+            <p>Adatok betöltése...</p>
+        </div>
 
-        <h2>📅 További szülinapok</h2>
+        <h2 class="section-title">📅 A többiek sorban...</h2>
         <div id="list-container" class="list-container">
             </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // Service Worker regisztráció a PWA-hoz
+        // PWA Service Worker regisztráció
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(() => console.log('Service Worker regisztrálva!'))
-                .catch((err) => console.log('SW hiba:', err));
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
