@@ -1,9 +1,10 @@
-const CACHE_NAME = 'szulinap-v1';
+const CACHE_NAME = 'szulinap-v2';
 const urlsToCache = [
   './',
   './index.html',
   './style.css',
   './script.js',
+  './adatok.json',
   './manifest.json'
 ];
 
