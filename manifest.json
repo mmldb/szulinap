@@ -1,0 +1,20 @@
+{
+  "name": "Családi Szülinapok",
+  "short_name": "Szülinap",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f0f2f5",
+  "theme_color": "#FF6B6B",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2488/2488980.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2488/2488980.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
