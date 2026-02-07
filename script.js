@@ -11,35 +11,41 @@ function getNextBirthday(birthDateString) {
     return nextBday;
 }
 
-// --- ANIMÁCIÓS FÜGGVÉNY (COUNTER) ---
+// --- JAVÍTOTT ANIMÁCIÓS FÜGGVÉNY ---
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
-    const speed = 2000; // 2 másodperc alatt pörögjön fel
+    const duration = 2000; // 2 másodperc alatt pörögjön fel
 
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target'); // A célérték
         const isFloat = counter.getAttribute('data-float') === "true"; // Tizedes kell-e?
         
-        const updateCount = () => {
-            // Jelenlegi érték kinyerése (tisztítva a karakterektől)
-            const currentText = counter.innerText.replace(/\s/g, '').replace(',', '.').replace(/[^\d.-]/g, ''); 
-            const current = +currentText; 
-            
-            const increment = target / (speed / 16); 
+        let startTimestamp = null;
 
-            if (current < target) {
-                const nextVal = current + increment;
-                
-                // Formázás
-                if (isFloat) {
-                    counter.innerText = nextVal.toLocaleString('hu-HU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                } else {
-                    counter.innerText = Math.ceil(nextVal).toLocaleString('hu-HU');
-                }
-                
-                requestAnimationFrame(updateCount);
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1); // 0-tól 1-ig megy
+
+            // Itt számoljuk ki az aktuális értéket a progress alapján
+            // Így nem veszítünk pontosságot a DOM-ból való visszaolvasás miatt
+            const currentVal = progress * target;
+
+            // Formázás és kiírás
+            if (isFloat) {
+                // Tizedeseknél 2 tizedesjegyre formázunk
+                counter.innerText = currentVal.toLocaleString('hu-HU', {
+                    minimumFractionDigits: 2, 
+                    maximumFractionDigits: 2
+                });
             } else {
-                // Végeredmény beállítása pontosan
+                // Egészeknél felfelé kerekítünk
+                counter.innerText = Math.floor(currentVal).toLocaleString('hu-HU');
+            }
+
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                // Biztos ami biztos, a végén beállítjuk a pontos célértéket
                 if (isFloat) {
                     counter.innerText = target.toLocaleString('hu-HU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 } else {
@@ -47,7 +53,8 @@ function animateCounters() {
                 }
             }
         };
-        updateCount();
+
+        requestAnimationFrame(step);
     });
 }
 
@@ -82,12 +89,13 @@ fetch('adatok.json')
         
         // Kaki matek: Ha 2 év alatti, 0.15 kg, amúgy 0.35 kg
         const poopMultiplier = (nextPerson.turningAge < 2) ? 0.15 : 0.35;
-        const poopAmount = Math.floor(daysAlive * poopMultiplier); 
+        // FONTOS: Itt nem kerekítünk előre, hagyjuk meg a tizedeseket!
+        const poopAmount = daysAlive * poopMultiplier; 
         
         const farts = Math.floor((daysAlive * 1.2) / 14); 
         const toiletDays = Math.floor((daysAlive * 20) / 1440);
-        const sleepYears = ((daysAlive / 365) / 3); // Float
-        const elephantsEaten = ((daysAlive * 1.8) / 6000); // Float
+        const sleepYears = ((daysAlive / 365) / 3); 
+        const elephantsEaten = ((daysAlive * 1.8) / 6000); 
 
         // HTML ÉPÍTÉS 
         gridContainer.innerHTML = `
@@ -107,7 +115,7 @@ fetch('adatok.json')
 
             <div class="card stat-card bg-pink">
                 <div class="stat-icon">💩</div>
-                <div class="stat-number"><span class="counter" data-target="${poopAmount}">0</span> kg</div>
+                <div class="stat-number"><span class="counter" data-target="${poopAmount}" data-float="${poopAmount < 100 ? 'true' : 'false'}">0</span> kg</div>
                 <div class="stat-desc">Végtermék</div>
             </div>
 
