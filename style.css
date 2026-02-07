@@ -2,17 +2,15 @@
     --border: 3px solid #000000;
     --shadow: 6px 6px 0px #000000;
     
-    /* --- SZÍNEK A BEKÜLDÖTT KÉP ALAPJÁN --- */
-    --bg-yellow: #FFF8E1; /* Halvány háttér */
+    /* --- RETRO SZÍNPALETTA (A KÉPED ALAPJÁN) --- */
+    --retro-yellow: #FFC567;
+    --retro-pink:   #FB7DA8;
+    --retro-orange: #FD5A46;
+    --retro-purple: #552CB7;
+    --retro-green:  #00995E;
+    --retro-blue:   #058CD7;
+    --retro-white:  #ffffff;
     
-    --card-blue: #8AB4F8;   /* Föld kártya */
-    --card-pink: #F4A6B8;   /* Kaki kártya */
-    --card-green: #A8E6CF;  /* Puki kártya */
-    --card-white: #ffffff;  /* Alvás, Elefánt, Torta */
-    
-    --retro-purple: #C7B9FF; /* Horoszkóp */
-    --retro-orange: #FFCC80; /* Híresség */
-
     --font-main: 'Fredoka', sans-serif;
     --font-mono: 'Chivo Mono', monospace;
 }
@@ -21,7 +19,8 @@ body {
     font-family: var(--font-main);
     margin: 0;
     padding: 15px;
-    background-color: var(--bg-yellow);
+    /* A háttér a kért sárga */
+    background-color: var(--retro-yellow);
     /* Pöttyös textúra */
     background-image: radial-gradient(#000000 1.5px, transparent 1.5px);
     background-size: 25px 25px;
@@ -34,10 +33,35 @@ body {
     margin: 0 auto;
 }
 
-/* Felső címke */
+h1 {
+    font-family: var(--font-mono);
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    /* Fehér dobozban a cím, hogy olvasható legyen a sárgán */
+    background: white;
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.loading {
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
+    background: white;
+    border: var(--border);
+    border-radius: 15px;
+}
+
+/* --- FŐ KÁRTYA STÍLUS --- */
 .top-label {
     text-align: center;
-    margin-bottom: -15px;
+    margin-bottom: -18px; 
     position: relative;
     z-index: 2;
 }
@@ -45,7 +69,7 @@ body {
 .top-label span {
     background: black;
     color: white;
-    padding: 8px 15px;
+    padding: 8px 18px;
     border-radius: 20px;
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -53,13 +77,12 @@ body {
     text-transform: uppercase;
 }
 
-/* Fő kártya (Zsófi) */
 .main-card {
     background: white;
     border: var(--border);
     border-radius: 25px;
     box-shadow: var(--shadow);
-    padding: 30px 20px;
+    padding: 35px 20px 25px 20px;
     text-align: center;
     margin-bottom: 25px;
     position: relative;
@@ -67,7 +90,7 @@ body {
 }
 
 .main-name {
-    font-size: 3rem;
+    font-size: 3.2rem;
     font-weight: 900;
     margin: 10px 0;
     line-height: 1;
@@ -78,7 +101,7 @@ body {
     font-weight: 700;
 }
 
-/* --- GRID --- */
+/* --- GRID (KIS KÁRTYÁK) --- */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -96,7 +119,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: 130px;
+    min-height: 140px; 
     background-color: white;
     transition: transform 0.1s;
 }
@@ -111,7 +134,7 @@ body {
 .stat-number {
     font-family: var(--font-mono);
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     line-height: 1.1;
     margin-bottom: 5px;
 }
@@ -120,30 +143,56 @@ body {
     font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
-    opacity: 0.7;
+    opacity: 0.8; /* Kicsit erősebb, hogy olvasható legyen színes háttéren */
     letter-spacing: 0.5px;
 }
 
-/* Színek */
-.bg-blue { background-color: var(--card-blue); }
-.bg-pink { background-color: var(--card-pink); }
-.bg-green { background-color: var(--card-green); }
-.bg-white { background-color: var(--card-white); }
-.bg-purple { background-color: var(--retro-purple); }
-.bg-orange { background-color: var(--retro-orange); }
+/* --- RETRO HÁTTÉRSZÍNEK --- */
+/* Fontos: A sötét háttereknél (Kék, Zöld, Lila) fehér a betű */
+.bg-blue   { background-color: var(--retro-blue); color: white; }
+.bg-pink   { background-color: var(--retro-pink); color: black; }
+.bg-green  { background-color: var(--retro-green); color: white; }
+.bg-white  { background-color: var(--retro-white); color: black; }
+.bg-purple { background-color: var(--retro-purple); color: white; }
+.bg-orange { background-color: var(--retro-orange); color: black; }
 
-/* Lista alul */
-.list-container { margin-top: 30px; }
+/* --- LISTA ALUL --- */
+.list-title {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 900;
+    background: black;
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    transform: rotate(-1deg);
+}
+
+.list-container { margin-bottom: 40px; }
+
 .list-item {
     background: white;
     border: 2px solid black;
     border-radius: 12px;
-    padding: 12px 15px;
+    padding: 15px;
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 3px 3px 0px #000;
 }
-.list-name { font-weight: 700; }
-.list-days { font-family: var(--font-mono); font-size: 0.85rem; }
+
+.list-name { font-weight: 700; font-size: 1.1rem; }
+.list-days { 
+    font-family: var(--font-mono); 
+    font-size: 0.9rem; 
+    font-weight: bold;
+    /* A lista címkéje legyen Zöld, fehér szöveggel */
+    background: var(--retro-green);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid black;
+}
