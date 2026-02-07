@@ -18,24 +18,25 @@ body {
     margin: 0;
     padding: 15px;
     color: #000;
+    min-height: 100vh;
 
-    /* --- ANIMÁLT HÁTTÉR --- */
-    background: linear-gradient(-45deg, #FFF8E1, #e3f2fd, #fce4ec, #e8f5e9);
+    /* --- JAVÍTOTT ANIMÁLT HÁTTÉR (Élénkebb színekkel!) --- */
+    /* Itt most a változókat használjuk, hogy színesebb legyen */
+    background: linear-gradient(-45deg, #FFD93D, #FF9ebb, #6495ED, #98FB98);
     background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    animation: gradientBG 10s ease infinite;
     
     position: relative;
-    min-height: 100vh;
 }
 
-/* Pöttyös textúra a háttér felett */
+/* Pöttyös textúra (kicsit erősebb, hogy látszódjon a színeken) */
 body::before {
     content: "";
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-image: radial-gradient(#000000 1px, transparent 1px);
+    background-image: radial-gradient(#000000 1.5px, transparent 1.5px);
     background-size: 25px 25px;
-    opacity: 0.05;
+    opacity: 0.1;
     pointer-events: none;
     z-index: -1;
 }
@@ -69,6 +70,10 @@ h1 {
     text-align: center;
     font-weight: bold;
     grid-column: 1 / -1;
+    background: white;
+    padding: 20px;
+    border: var(--border);
+    border-radius: 15px;
 }
 
 /* --- DASHBOARD GRID --- */
