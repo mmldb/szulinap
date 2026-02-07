@@ -12,7 +12,7 @@ function getNextBirthday(birthDateString) {
     return nextBday;
 }
 
-// --- 1. KÍNAI HOROSZKÓP ADATBÁZIS ---
+// --- 1. KÍNAI HOROSZKÓP ---
 const zodiacSigns = [
     { name: "Majom", icon: "🐒", text: "Zseniális problémamegoldó vagy, kreativitásod sikert hoz." },      
     { name: "Kakas", icon: "🐓", text: "Pontosságod és szorgalmad nagy elismerést vált ki." },      
@@ -126,7 +126,7 @@ fetch('adatok.json')
         `;
         document.getElementById('focus-container').innerHTML = focusHTML;
 
-        // --- 2. RÁCS BEILLESZTÉSE ---
+        // --- 2. RÁCS BEILLESZTÉSE (RETRO SZÍNEKKEL!) ---
         const gridHTML = `
             <div class="card bg-blue">
                 <div class="stat-icon">🌍</div>
