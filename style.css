@@ -2,7 +2,7 @@
     --border: 3px solid #000000;
     --shadow: 5px 5px 0px #000000;
     
-    /* --- ÚJ RETRO PALETTA (image_2.png alapján) --- */
+    /* --- RETRO PALETTA --- */
     --retro-yellow: #FFC567;
     --retro-pink: #FB7DA8;
     --retro-orange: #FD5A46;
@@ -22,24 +22,13 @@ body {
     color: #000;
     min-height: 100vh;
 
-    /* --- GYORSABB, HULLÁMZÓ RETRO HÁTTÉR --- */
-    /* Felhasználtuk a paletta összes színét */
-    background: linear-gradient(-45deg, 
-        var(--retro-yellow),
-        var(--retro-pink), 
-        var(--retro-orange),
-        var(--retro-purple),
-        var(--retro-green),
-        var(--retro-blue)
-    );
-    background-size: 400% 400%;
-    /* 10s helyett 1.5s -> sokkal gyorsabb! */
-    animation: gradientBG 1.5s ease infinite;
+    /* --- FIX SÁRGA HÁTTÉR (Nincs animáció) --- */
+    background-color: var(--retro-yellow);
     
     position: relative;
 }
 
-/* Pöttyös textúra marad */
+/* A pöttyös textúra marad, mert ad egy kis anyaghatást */
 body::before {
     content: "";
     position: fixed;
@@ -49,12 +38,6 @@ body::before {
     opacity: 0.1;
     pointer-events: none;
     z-index: -1;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 .main-wrapper {
@@ -94,10 +77,10 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* A fő kártya alapból sárga */
+/* FŐ KÁRTYA: Most FEHÉR, hogy elüssön a sárga háttértől */
 .grid-item-main {
     grid-column: 1 / -1;
-    background-color: var(--retro-yellow);
+    background-color: white; 
 }
 
 .card {
@@ -129,15 +112,16 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* --- ÜNNEPELT NEVE (Sárga + Fekete Stroke) --- */
+/* --- ÜNNEPELT NEVE --- */
 .next-name {
     font-size: 2.5rem;
-    font-weight: 900; /* Vastagabb betű a kontúrhoz */
+    font-weight: 900;
     margin: 5px 0;
     line-height: 1;
-    color: var(--retro-yellow); /* Sárga kitöltés */
-    -webkit-text-stroke: 2px black; /* Fekete kontúr */
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2); /* Kis árnyék a mélységért */
+    /* Sárga kitöltés, fekete keret - fehéren nagyon jól mutat! */
+    color: var(--retro-yellow); 
+    -webkit-text-stroke: 2px black;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
 }
 
 .next-details {
@@ -173,11 +157,10 @@ h1 {
     opacity: 0.8;
 }
 
-/* --- ÚJ SZÍNES HÁTTÉR OSZTÁLYOK A PALETTA ALAPJÁN --- */
+/* --- SZÍNES HÁTTÉR OSZTÁLYOK --- */
 .bg-retro-yellow { background-color: var(--retro-yellow); color: black; }
 .bg-retro-pink { background-color: var(--retro-pink); color: black; }
 .bg-retro-orange { background-color: var(--retro-orange); color: black;}
-/* Sötétebb színeknél fehér a szöveg a kontraszt miatt */
 .bg-retro-purple { background-color: var(--retro-purple); color: white; }
 .bg-retro-green { background-color: var(--retro-green); color: white; }
 .bg-retro-blue { background-color: var(--retro-blue); color: white; }
@@ -211,7 +194,7 @@ h1 {
 .list-name { font-weight: 700; font-size: 1.1rem; }
 
 .list-days {
-    background: var(--retro-green); /* Zöld a listában is */
+    background: var(--retro-green);
     color: white;
     border: 2px solid black;
     padding: 3px 8px;
