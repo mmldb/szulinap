@@ -1,4 +1,4 @@
-const CACHE_NAME = 'szulinap-v2';
+const CACHE_NAME = 'szulinap-dashboard-v3';
 const urlsToCache = [
   './',
   './index.html',
