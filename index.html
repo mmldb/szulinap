@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Családi Szülinapok</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FF6B6B">
+    <link rel="apple-touch-icon" href="icon-192.png"> 
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🎉 Következő Ünnepelt 🎉</h1>
+        </header>
+
+        <div id="focus-card" class="card focus-mode">
+            </div>
+
+        <h2>📅 További szülinapok</h2>
+        <div id="list-container" class="list-container">
+            </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Service Worker regisztráció a PWA-hoz
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker regisztrálva!'))
+                .catch((err) => console.log('SW hiba:', err));
+        }
+    </script>
+</body>
+</html>
