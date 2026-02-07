@@ -1,147 +1,178 @@
 :root {
-    /* Színpaletta a kép alapján */
-    --bg-color: #F2F2F2; /* Törtfehér háttér */
-    --text-dark: #1A1A1A;
-    --card-yellow: #F3E99F; /* Halványsárga */
-    --stat-green: #3A8E7A;  /* Mélyzöld */
-    --stat-pink: #FADCE6;   /* Rózsaszín */
-    --stat-purple: #C7B9FF; /* Lila */
-    --stat-light-yellow: #FDFD96; /* Világosabb sárga */
+    --bg-color: #fcfcfc;
+    --border: 3px solid #000000;
+    --shadow: 5px 5px 0px #000000;
     
-    /* Fontok */
-    --font-serif: 'DM Serif Display', serif;
-    --font-sans: 'DM Sans', sans-serif;
+    /* Neon-Retro Paletta */
+    --color-blue: #6495ED;  /* Kornflower kék */
+    --color-pink: #FF9ebb;  /* Cukorka rózsaszín */
+    --color-yellow: #FFD93D; /* Élénk sárga */
+    --color-green: #98FB98;  /* Pasztell zöld */
+    --color-white: #ffffff;
+    
+    --font-main: 'Fredoka', sans-serif;
+    --font-mono: 'Chivo Mono', monospace;
 }
 
 body {
-    font-family: var(--font-sans);
-    background-color: var(--bg-color);
+    font-family: var(--font-main);
+    background-color: #FFF8E1; /* Nagyon halvány sárgás háttér */
+    background-image: radial-gradient(#000000 1px, transparent 1px);
+    background-size: 25px 25px; /* Pöttyös retro háttér */
     margin: 0;
-    padding: 20px;
-    color: var(--text-dark);
+    padding: 15px;
+    color: #000;
 }
 
-.container {
-    max-width: 450px; /* Kicsit szűkebb, mobilosabb nézet */
+.main-wrapper {
+    max-width: 500px;
     margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 0; /* Szögletesebb dizájn */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
 h1 {
-    font-family: var(--font-serif);
-    font-size: 1.6rem;
+    font-family: var(--font-mono);
     text-align: center;
+    font-weight: 900;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    background: white;
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* --- DASHBOARD GRID --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Két oszlop */
+    gap: 15px;
     margin-bottom: 30px;
-    font-weight: normal;
 }
 
-.section-title {
-    font-family: var(--font-serif);
-    font-size: 1.3rem;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    font-weight: normal;
+/* A fő kártya (Ki a következő) teljes szélességű */
+.grid-item-main {
+    grid-column: 1 / -1;
+    background-color: var(--color-yellow);
 }
 
-/* --- FÓKUSZ KÁRTYA (Az ünnepelt) --- */
-.focus-header-panel {
-    background-color: var(--card-yellow);
-    padding: 30px 20px;
+.card {
+    border: var(--border);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.1s;
+}
+
+.card:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+}
+
+/* A nagy kártya belseje */
+.next-person-card {
     text-align: center;
-    margin-bottom: 20px;
-    /* Kicsit megtörjük a keretet, mint a képen a fotó */
-    margin-left: -20px;
-    margin-right: -20px;
-    width: calc(100% + 40px);
 }
 
-.focus-header-panel h2 {
-    font-family: var(--font-serif);
-    font-size: 2.8rem;
-    margin: 0;
+.next-label {
+    background: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.next-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 5px 0;
+    line-height: 1;
+}
+
+.next-details {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Kisebb statisztika kártyák */
+.stat-card {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    min-height: 100px;
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.stat-number {
+    font-family: var(--font-mono);
+    font-weight: 900;
+    font-size: 1.2rem;
     line-height: 1.1;
 }
 
-.focus-header-panel .date-info {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    margin-top: 15px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    opacity: 0.8;
-}
-
-/* --- STATISZTIKA SÁVOK --- */
-.stats-container {
-    display: flex;
-    flex-direction: column;
-    /* A sávok is kilognak a széléig */
-    margin-left: -20px;
-    margin-right: -20px;
-}
-
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 30px;
-    color: var(--text-dark);
-}
-
-/* Színek hozzárendelése a sorokhoz */
-.stat-row:nth-child(1) { background-color: var(--stat-green); color: white; }
-.stat-row:nth-child(2) { background-color: var(--stat-pink); }
-.stat-row:nth-child(3) { background-color: var(--stat-purple); }
-.stat-row:nth-child(4) { background-color: var(--stat-light-yellow); }
-.stat-row:nth-child(5) { background-color: #E0E0E0; } /* Szürke az alvásnak */
-.stat-row:nth-child(6) { background-color: white; border-bottom: 2px solid #f0f0f0; } /* Torták */
-
-
-.stat-data {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-value {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
-    line-height: 1;
-    margin-bottom: 8px;
-}
-
-.stat-label {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.stat-desc {
+    font-size: 0.7rem;
     font-weight: 700;
-    opacity: 0.8;
+    text-transform: uppercase;
+    margin-top: 5px;
+    opacity: 0.7;
 }
 
-.stat-emoji {
-    font-size: 2rem;
+/* Színes hátterek a statoknak */
+.bg-blue { background-color: var(--color-blue); }
+.bg-pink { background-color: var(--color-pink); }
+.bg-green { background-color: var(--color-green); }
+.bg-white { background-color: white; }
+
+/* --- LISTA ALUL --- */
+.list-title {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin-bottom: 10px;
+    background: black;
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    transform: rotate(-2deg);
 }
 
-/* --- LISTA ELEMEK --- */
 .list-item {
+    background: white;
+    border: var(--border);
+    border-radius: 12px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
+    box-shadow: 3px 3px 0px #000;
 }
 
-.list-item .name {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
+.list-name {
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
-.list-item .days-left {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    color: #666;
-    font-size: 0.9rem;
+.list-days {
+    background: var(--color-green);
+    border: 2px solid black;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
 }
