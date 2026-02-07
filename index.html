@@ -3,36 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Családi Szülinapok</title>
+    <title>Családi Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#F3E99F">
+    <meta name="theme-color" content="#4D96FF">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;900&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     
     <link rel="apple-touch-icon" href="icon-192.png"> 
 </head>
 <body>
 
-    <div class="container">
+    <div class="main-wrapper">
         <header>
-            <h1>Következő ünnepelt a családban 🎉</h1>
+            <h1>SZÜLINAP DASHBOARD 🎂</h1>
         </header>
 
-        <div id="focus-card">
-            <p style="text-align: center; padding: 20px;">Adatok betöltése...</p>
+        <div id="dashboard-grid" class="dashboard-grid">
+            <div class="loading">Adatok betöltése...</div>
         </div>
 
-        <h2 class="section-title">A többiek sorban...</h2>
+        <h3 class="list-title">A TÖBBIEK SORBAN:</h3>
         <div id="list-container" class="list-container">
             </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // PWA Service Worker regisztráció
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
