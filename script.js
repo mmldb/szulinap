@@ -13,7 +13,7 @@ function getNextBirthday(birthDateString) {
     return nextBday;
 }
 
-// ADATOK BEOLVASÁSA (Fetch)
+// ADATOK BEOLVASÁSA (adatok.json fájlból)
 fetch('adatok.json')
     .then(response => response.json())
     .then(familyData => {
@@ -46,13 +46,16 @@ fetch('adatok.json')
         const nextPerson = processedData[0];
         const focusContainer = document.getElementById('focus-card');
 
-        // Vicces statisztikák
+        // Vicces statisztikák számolása
         const diffInTime = today.getTime() - nextPerson.birthDateObj.getTime();
-        const daysAlive = Math.floor(diffInTime / (1000 * 3600 * 24));
-        const dogYears = Math.floor((daysAlive / 365) * 7);
-        const breaths = (daysAlive * 1440 * 16).toLocaleString('hu-HU');
-        const heartBeats = (daysAlive * 1440 * 80).toLocaleString('hu-HU');
-        const sleepYears = ((daysAlive / 365) / 3).toFixed(1);
+        const daysAlive = Math.floor(diffInTime / (1000 * 3600 * 24)); // Hány napja él
+
+        // ÚJ STATISZTIKA: Kaki kalkulátor (napi 0.35 kg átlaggal)
+        const poopAmount = (daysAlive * 0.35).toLocaleString('hu-HU', {maximumFractionDigits: 0});
+
+        const breaths = (daysAlive * 1440 * 16).toLocaleString('hu-HU'); // 16 légzés/perc
+        const heartBeats = (daysAlive * 1440 * 80).toLocaleString('hu-HU'); // 80 szívverés/perc
+        const sleepYears = ((daysAlive / 365) / 3).toFixed(1); // Élet 1/3-a alvás
 
         focusContainer.innerHTML = `
             <h2>${nextPerson.name}</h2>
@@ -64,8 +67,8 @@ fetch('adatok.json')
                     ${daysAlive.toLocaleString('hu-HU')}
                 </div>
                 <div class="stat-item">
-                    <strong>Kutyaévekben</strong>
-                    kb. ${dogYears} éves lennél
+                    <strong>Termelt "végtermék"</strong>
+                    kb. ${poopAmount} kg 💩
                 </div>
                 <div class="stat-item">
                     <strong>Szívdobbanások</strong>
@@ -88,7 +91,7 @@ fetch('adatok.json')
 
         // 3. A többi ember listázása
         const listContainer = document.getElementById('list-container');
-        listContainer.innerHTML = ''; // Törlés, ha esetleg volt valami
+        listContainer.innerHTML = ''; // Törlés először
         
         processedData.slice(1).forEach(person => {
             const div = document.createElement('div');
@@ -102,5 +105,5 @@ fetch('adatok.json')
     })
     .catch(error => {
         console.error('Hiba az adatok betöltésekor:', error);
-        document.getElementById('list-container').innerHTML = '<p style="color:red">Nem sikerült betölteni az adatokat.</p>';
+        document.getElementById('list-container').innerHTML = '<p style="color:red">Nem sikerült betölteni az adatokat. Ellenőrizd az adatok.json fájlt!</p>';
     });
