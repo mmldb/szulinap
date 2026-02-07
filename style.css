@@ -1,16 +1,18 @@
 :root {
     --border: 3px solid #000000;
-    --shadow: 5px 5px 0px #000000;
+    --shadow: 6px 6px 0px #000000;
     
-    /* --- RETRO PALETTA --- */
-    --retro-yellow: #FFC567;
-    --retro-pink: #FB7DA8;
-    --retro-orange: #FD5A46;
-    --retro-purple: #552CB7;
-    --retro-green: #00995E;
-    --retro-blue: #058CD7;
-    --color-white: #ffffff;
+    /* --- SZÍNEK A BEKÜLDÖTT KÉP ALAPJÁN --- */
+    --bg-yellow: #FFF8E1; /* Halvány háttér */
     
+    --card-blue: #8AB4F8;   /* Föld kártya */
+    --card-pink: #F4A6B8;   /* Kaki kártya */
+    --card-green: #A8E6CF;  /* Puki kártya */
+    --card-white: #ffffff;  /* Alvás, Elefánt, Torta */
+    
+    --retro-purple: #C7B9FF; /* Horoszkóp */
+    --retro-orange: #FFCC80; /* Híresség */
+
     --font-main: 'Fredoka', sans-serif;
     --font-mono: 'Chivo Mono', monospace;
 }
@@ -19,25 +21,12 @@ body {
     font-family: var(--font-main);
     margin: 0;
     padding: 15px;
-    color: #000;
-    min-height: 100vh;
-
-    /* --- FIX SÁRGA HÁTTÉR (Nincs animáció) --- */
-    background-color: var(--retro-yellow);
-    
-    position: relative;
-}
-
-/* A pöttyös textúra marad, mert ad egy kis anyaghatást */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--bg-yellow);
+    /* Pöttyös textúra */
     background-image: radial-gradient(#000000 1.5px, transparent 1.5px);
     background-size: 25px 25px;
-    opacity: 0.1;
-    pointer-events: none;
-    z-index: -1;
+    color: #000;
+    min-height: 100vh;
 }
 
 .main-wrapper {
@@ -45,31 +34,51 @@ body::before {
     margin: 0 auto;
 }
 
-h1 {
+/* Felső címke */
+.top-label {
+    text-align: center;
+    margin-bottom: -15px;
+    position: relative;
+    z-index: 2;
+}
+
+.top-label span {
+    background: black;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
     font-family: var(--font-mono);
-    text-align: center;
-    font-weight: 900;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    background: white;
-    border: var(--border);
-    box-shadow: var(--shadow);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.loading {
-    text-align: center;
+    font-size: 0.8rem;
     font-weight: bold;
-    grid-column: 1 / -1;
-    background: white;
-    padding: 20px;
-    border: var(--border);
-    border-radius: 15px;
+    text-transform: uppercase;
 }
 
-/* --- DASHBOARD GRID --- */
+/* Fő kártya (Zsófi) */
+.main-card {
+    background: white;
+    border: var(--border);
+    border-radius: 25px;
+    box-shadow: var(--shadow);
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.main-name {
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 10px 0;
+    line-height: 1;
+}
+
+.main-details {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* --- GRID --- */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -77,111 +86,57 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* FŐ KÁRTYA: Most FEHÉR, hogy elüssön a sárga háttértől */
-.grid-item-main {
-    grid-column: 1 / -1;
-    background-color: white; 
-}
-
 .card {
     border: var(--border);
-    border-radius: 15px;
+    border-radius: 20px;
     box-shadow: var(--shadow);
     padding: 15px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.1s;
-    background-color: white;
-}
-
-.card:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px #000;
-}
-
-.next-person-card { text-align: center; }
-
-.next-label {
-    background: black;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    display: inline-block;
-    margin-bottom: 10px;
-}
-
-/* --- ÜNNEPELT NEVE --- */
-.next-name {
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin: 5px 0;
-    line-height: 1;
-    /* Sárga kitöltés, fekete keret - fehéren nagyon jól mutat! */
-    color: var(--retro-yellow); 
-    -webkit-text-stroke: 2px black;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-}
-
-.next-details {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-/* Stat kártyák */
-.stat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 10px;
-    min-height: 100px;
+    min-height: 130px;
+    background-color: white;
+    transition: transform 0.1s;
 }
 
-.stat-icon { font-size: 2rem; margin-bottom: 5px; }
+.card:active {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0px #000;
+}
+
+.stat-icon { font-size: 2.5rem; margin-bottom: 8px; }
 
 .stat-number {
     font-family: var(--font-mono);
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 1.1;
+    margin-bottom: 5px;
 }
 
 .stat-desc {
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-size: 0.75rem;
+    font-weight: 800;
     text-transform: uppercase;
-    margin-top: 5px;
-    opacity: 0.8;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
 }
 
-/* --- SZÍNES HÁTTÉR OSZTÁLYOK --- */
-.bg-retro-yellow { background-color: var(--retro-yellow); color: black; }
-.bg-retro-pink { background-color: var(--retro-pink); color: black; }
-.bg-retro-orange { background-color: var(--retro-orange); color: black;}
-.bg-retro-purple { background-color: var(--retro-purple); color: white; }
-.bg-retro-green { background-color: var(--retro-green); color: white; }
-.bg-retro-blue { background-color: var(--retro-blue); color: white; }
-.bg-white { background-color: white; color: black; }
-
+/* Színek */
+.bg-blue { background-color: var(--card-blue); }
+.bg-pink { background-color: var(--card-pink); }
+.bg-green { background-color: var(--card-green); }
+.bg-white { background-color: var(--card-white); }
+.bg-purple { background-color: var(--retro-purple); }
+.bg-orange { background-color: var(--retro-orange); }
 
 /* Lista alul */
-.list-title {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    margin-bottom: 10px;
-    background: black;
-    color: white;
-    display: inline-block;
-    padding: 5px 10px;
-    transform: rotate(-2deg);
-}
-
+.list-container { margin-top: 30px; }
 .list-item {
     background: white;
-    border: var(--border);
+    border: 2px solid black;
     border-radius: 12px;
     padding: 12px 15px;
     margin-bottom: 10px;
@@ -190,16 +145,5 @@ h1 {
     align-items: center;
     box-shadow: 3px 3px 0px #000;
 }
-
-.list-name { font-weight: 700; font-size: 1.1rem; }
-
-.list-days {
-    background: var(--retro-green);
-    color: white;
-    border: 2px solid black;
-    padding: 3px 8px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    font-family: var(--font-mono);
-}
+.list-name { font-weight: 700; }
+.list-days { font-family: var(--font-mono); font-size: 0.85rem; }
