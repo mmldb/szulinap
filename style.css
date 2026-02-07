@@ -2,11 +2,13 @@
     --border: 3px solid #000000;
     --shadow: 5px 5px 0px #000000;
     
-    /* Neon-Retro Paletta */
-    --color-blue: #6495ED;
-    --color-pink: #FF9ebb;
-    --color-yellow: #FFD93D;
-    --color-green: #98FB98;
+    /* --- ÚJ RETRO PALETTA (image_2.png alapján) --- */
+    --retro-yellow: #FFC567;
+    --retro-pink: #FB7DA8;
+    --retro-orange: #FD5A46;
+    --retro-purple: #552CB7;
+    --retro-green: #00995E;
+    --retro-blue: #058CD7;
     --color-white: #ffffff;
     
     --font-main: 'Fredoka', sans-serif;
@@ -20,16 +22,24 @@ body {
     color: #000;
     min-height: 100vh;
 
-    /* --- JAVÍTOTT ANIMÁLT HÁTTÉR (Élénkebb színekkel!) --- */
-    /* Itt most a változókat használjuk, hogy színesebb legyen */
-    background: linear-gradient(-45deg, #FFD93D, #FF9ebb, #6495ED, #98FB98);
+    /* --- GYORSABB, HULLÁMZÓ RETRO HÁTTÉR --- */
+    /* Felhasználtuk a paletta összes színét */
+    background: linear-gradient(-45deg, 
+        var(--retro-yellow),
+        var(--retro-pink), 
+        var(--retro-orange),
+        var(--retro-purple),
+        var(--retro-green),
+        var(--retro-blue)
+    );
     background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
+    /* 10s helyett 1.5s -> sokkal gyorsabb! */
+    animation: gradientBG 1.5s ease infinite;
     
     position: relative;
 }
 
-/* Pöttyös textúra (kicsit erősebb, hogy látszódjon a színeken) */
+/* Pöttyös textúra marad */
 body::before {
     content: "";
     position: fixed;
@@ -84,9 +94,10 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* A fő kártya alapból sárga */
 .grid-item-main {
     grid-column: 1 / -1;
-    background-color: var(--color-yellow);
+    background-color: var(--retro-yellow);
 }
 
 .card {
@@ -118,11 +129,15 @@ h1 {
     margin-bottom: 10px;
 }
 
+/* --- ÜNNEPELT NEVE (Sárga + Fekete Stroke) --- */
 .next-name {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 900; /* Vastagabb betű a kontúrhoz */
     margin: 5px 0;
     line-height: 1;
+    color: var(--retro-yellow); /* Sárga kitöltés */
+    -webkit-text-stroke: 2px black; /* Fekete kontúr */
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.2); /* Kis árnyék a mélységért */
 }
 
 .next-details {
@@ -155,13 +170,19 @@ h1 {
     font-weight: 700;
     text-transform: uppercase;
     margin-top: 5px;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
-.bg-blue { background-color: var(--color-blue); }
-.bg-pink { background-color: var(--color-pink); }
-.bg-green { background-color: var(--color-green); }
-.bg-white { background-color: white; }
+/* --- ÚJ SZÍNES HÁTTÉR OSZTÁLYOK A PALETTA ALAPJÁN --- */
+.bg-retro-yellow { background-color: var(--retro-yellow); color: black; }
+.bg-retro-pink { background-color: var(--retro-pink); color: black; }
+.bg-retro-orange { background-color: var(--retro-orange); color: black;}
+/* Sötétebb színeknél fehér a szöveg a kontraszt miatt */
+.bg-retro-purple { background-color: var(--retro-purple); color: white; }
+.bg-retro-green { background-color: var(--retro-green); color: white; }
+.bg-retro-blue { background-color: var(--retro-blue); color: white; }
+.bg-white { background-color: white; color: black; }
+
 
 /* Lista alul */
 .list-title {
@@ -190,7 +211,8 @@ h1 {
 .list-name { font-weight: 700; font-size: 1.1rem; }
 
 .list-days {
-    background: var(--color-green);
+    background: var(--retro-green); /* Zöld a listában is */
+    color: white;
     border: 2px solid black;
     padding: 3px 8px;
     border-radius: 8px;
