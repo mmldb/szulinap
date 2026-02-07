@@ -14,38 +14,32 @@ function getNextBirthday(birthDateString) {
 // --- JAVÍTOTT ANIMÁCIÓS FÜGGVÉNY ---
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
-    const duration = 2000; // 2 másodperc alatt pörögjön fel
+    const duration = 2000; 
 
     counters.forEach(counter => {
-        const target = +counter.getAttribute('data-target'); // A célérték
-        const isFloat = counter.getAttribute('data-float') === "true"; // Tizedes kell-e?
+        const target = +counter.getAttribute('data-target');
+        const isFloat = counter.getAttribute('data-float') === "true";
         
         let startTimestamp = null;
 
         const step = (timestamp) => {
             if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1); // 0-tól 1-ig megy
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1); 
 
-            // Itt számoljuk ki az aktuális értéket a progress alapján
-            // Így nem veszítünk pontosságot a DOM-ból való visszaolvasás miatt
             const currentVal = progress * target;
 
-            // Formázás és kiírás
             if (isFloat) {
-                // Tizedeseknél 2 tizedesjegyre formázunk
                 counter.innerText = currentVal.toLocaleString('hu-HU', {
                     minimumFractionDigits: 2, 
                     maximumFractionDigits: 2
                 });
             } else {
-                // Egészeknél felfelé kerekítünk
                 counter.innerText = Math.floor(currentVal).toLocaleString('hu-HU');
             }
 
             if (progress < 1) {
                 requestAnimationFrame(step);
             } else {
-                // Biztos ami biztos, a végén beállítjuk a pontos célértéket
                 if (isFloat) {
                     counter.innerText = target.toLocaleString('hu-HU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 } else {
@@ -62,7 +56,6 @@ fetch('adatok.json')
     .then(response => response.json())
     .then(familyData => {
         
-        // 1. Feldolgozás
         const processedData = familyData.map(person => {
             const birthDate = new Date(person.date);
             const nextBday = getNextBirthday(person.date);
@@ -83,13 +76,10 @@ fetch('adatok.json')
         const nextPerson = processedData[0];
         const gridContainer = document.getElementById('dashboard-grid');
 
-        // Statisztikák számolása (NYERS ADATOKKAL!)
         const diffInTime = today.getTime() - nextPerson.birthDateObj.getTime();
         const daysAlive = Math.floor(diffInTime / (1000 * 3600 * 24));
         
-        // Kaki matek: Ha 2 év alatti, 0.15 kg, amúgy 0.35 kg
         const poopMultiplier = (nextPerson.turningAge < 2) ? 0.15 : 0.35;
-        // FONTOS: Itt nem kerekítünk előre, hagyjuk meg a tizedeseket!
         const poopAmount = daysAlive * poopMultiplier; 
         
         const farts = Math.floor((daysAlive * 1.2) / 14); 
@@ -97,7 +87,7 @@ fetch('adatok.json')
         const sleepYears = ((daysAlive / 365) / 3); 
         const elephantsEaten = ((daysAlive * 1.8) / 6000); 
 
-        // HTML ÉPÍTÉS 
+        // HTML ÉPÍTÉS - ÚJ SZÍNEKKEL!
         gridContainer.innerHTML = `
             <div class="card grid-item-main next-person-card">
                 <div class="next-label">KÖVETKEZŐ ÜNNEPELT</div>
@@ -107,31 +97,31 @@ fetch('adatok.json')
                 </div>
             </div>
 
-            <div class="card stat-card bg-blue">
+            <div class="card stat-card bg-retro-blue">
                 <div class="stat-icon">🌍</div>
                 <div class="stat-number counter" data-target="${daysAlive}">0</div>
                 <div class="stat-desc">Napja élsz</div>
             </div>
 
-            <div class="card stat-card bg-pink">
+            <div class="card stat-card bg-retro-pink">
                 <div class="stat-icon">💩</div>
                 <div class="stat-number"><span class="counter" data-target="${poopAmount}" data-float="${poopAmount < 100 ? 'true' : 'false'}">0</span> kg</div>
                 <div class="stat-desc">Végtermék</div>
             </div>
 
-            <div class="card stat-card bg-green">
+            <div class="card stat-card bg-retro-green">
                 <div class="stat-icon">🎈</div>
                 <div class="stat-number"><span class="counter" data-target="${farts}">0</span> db</div>
                 <div class="stat-desc">Puki-lufi</div>
             </div>
 
-            <div class="card stat-card bg-white">
+            <div class="card stat-card bg-retro-purple">
                 <div class="stat-icon">😴</div>
                 <div class="stat-number"><span class="counter" data-target="${sleepYears}" data-float="true">0</span> év</div>
                 <div class="stat-desc">Alvás</div>
             </div>
             
-             <div class="card stat-card bg-white">
+             <div class="card stat-card bg-retro-orange">
                 <div class="stat-icon">🐘</div>
                 <div class="stat-number"><span class="counter" data-target="${elephantsEaten}" data-float="true">0</span> db</div>
                 <div class="stat-desc">Elefánt (kaja)</div>
@@ -144,10 +134,8 @@ fetch('adatok.json')
             </div>
         `;
 
-        // Animáció indítása
         animateCounters();
 
-        // 3. Alsó lista
         const listContainer = document.getElementById('list-container');
         listContainer.innerHTML = '';
         
