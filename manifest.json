@@ -1,9 +1,9 @@
 {
-  "name": "Családi Szülinapok",
+  "name": "Családi Dashboard",
   "short_name": "Szülinap",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f8f0e3",
+  "background_color": "#FFF8E1",
   "theme_color": "#FFD93D",
   "icons": [
     {
