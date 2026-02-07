@@ -3,8 +3,8 @@
   "short_name": "Szülinap",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f0f2f5",
-  "theme_color": "#FF6B6B",
+  "background_color": "#f8f0e3",
+  "theme_color": "#FFD93D",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/2488/2488980.png",
