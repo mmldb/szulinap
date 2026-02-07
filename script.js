@@ -13,7 +13,7 @@ function getNextBirthday(birthDateString) {
     return nextBday;
 }
 
-// ADATOK BEOLVASÁSA (adatok.json fájlból)
+// ADATOK BEOLVASÁSA
 fetch('adatok.json')
     .then(response => response.json())
     .then(familyData => {
@@ -23,11 +23,8 @@ fetch('adatok.json')
             const birthDate = new Date(person.date);
             const nextBday = getNextBirthday(person.date);
             
-            // Napok különbsége
             const diffTime = nextBday - today;
             const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            // Hány éves LESZ
             let age = nextBday.getFullYear() - birthDate.getFullYear();
 
             return {
@@ -49,10 +46,13 @@ fetch('adatok.json')
         const diffInTime = today.getTime() - nextPerson.birthDateObj.getTime();
         const daysAlive = Math.floor(diffInTime / (1000 * 3600 * 24)); // Hány napja él
 
-        // 1. Kaki kalkulátor (napi 0.35 kg átlag)
-        const poopAmount = (daysAlive * 0.35).toLocaleString('hu-HU', {maximumFractionDigits: 0});
+        // 1. Kaki kalkulátor (FINOMÍTVA!)
+        // Ha 2 év alatti (baba/kisgyerek), akkor kevesebb (napi 0.15kg),
+        // ha idősebb, akkor felnőtt adag (napi 0.35kg).
+        const poopMultiplier = (nextPerson.turningAge < 2) ? 0.15 : 0.35;
+        const poopAmount = (daysAlive * poopMultiplier).toLocaleString('hu-HU', {maximumFractionDigits: 0});
 
-        // 2. Fingós stat (Lufi egyenérték: 1.2 liter gáz / 14 literes lufi)
+        // 2. Fingós stat (Lufi egyenérték)
         const fartsInBalloons = Math.floor((daysAlive * 1.2) / 14).toLocaleString('hu-HU');
 
         // 3. WC-n töltött idő (Napi 20 perc átlagosan)
@@ -64,46 +64,65 @@ fetch('adatok.json')
         // 5. Alvás (életünk 1/3-a)
         const sleepYears = ((daysAlive / 365) / 3).toFixed(1);
 
-        // HTML Generálás
+        // ÚJ HTML GENERÁLÁS (A sávos elrendezéshez)
         focusContainer.innerHTML = `
-            <h2>${nextPerson.name}</h2>
-            <div class="date">${nextPerson.daysLeft} nap múlva ${nextPerson.turningAge}!</div>
+            <div class="focus-header-panel">
+                <h2>${nextPerson.name}</h2>
+                <div class="date-info">${nextPerson.daysLeft} nap múlva lesz ${nextPerson.turningAge} éves</div>
+            </div>
             
-            <div class="stats-grid">
-                <div class="stat-item">
+            <div class="stats-container">
+                <div class="stat-row">
+                    <div class="stat-data">
+                        <span class="stat-value">${daysAlive.toLocaleString('hu-HU')}</span>
+                        <span class="stat-label">Napja élsz a Földön</span>
+                    </div>
                     <span class="stat-emoji">🌍</span>
-                    <span class="stat-value">${daysAlive.toLocaleString('hu-HU')}</span>
-                    <span class="stat-label">Napja élsz</span>
                 </div>
-                <div class="stat-item">
+                
+                <div class="stat-row">
+                    <div class="stat-data">
+                        <span class="stat-value">kb. ${poopAmount} kg</span>
+                        <span class="stat-label">Termelt "végtermék"</span>
+                    </div>
                     <span class="stat-emoji">💩</span>
-                    <span class="stat-value">${poopAmount} kg</span>
-                    <span class="stat-label">Végtermék</span>
                 </div>
-                <div class="stat-item">
+
+                <div class="stat-row">
+                    <div class="stat-data">
+                        <span class="stat-value">${fartsInBalloons} db</span>
+                        <span class="stat-label">Puki-lufi egyenérték</span>
+                    </div>
                     <span class="stat-emoji">🎈</span>
-                    <span class="stat-value">${fartsInBalloons} db</span>
-                    <span class="stat-label">Puki-lufi</span>
                 </div>
-                <div class="stat-item">
+
+                <div class="stat-row">
+                    <div class="stat-data">
+                        <span class="stat-value">${toiletDays} nap</span>
+                        <span class="stat-label">WC-n töltött idő</span>
+                    </div>
                     <span class="stat-emoji">🚽</span>
-                    <span class="stat-value">${toiletDays} nap</span>
-                    <span class="stat-label">WC-n ülve</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-emoji">🐘</span>
-                    <span class="stat-value">${elephantsEaten} db</span>
-                    <span class="stat-label">Elefánt (kaja)</span>
-                </div>
-                <div class="stat-item">
+
+                 <div class="stat-row">
+                    <div class="stat-data">
+                        <span class="stat-value">${sleepYears} év</span>
+                        <span class="stat-label">Alvással töltött idő</span>
+                    </div>
                     <span class="stat-emoji">😴</span>
-                    <span class="stat-value">${sleepYears} év</span>
-                    <span class="stat-label">Alvás</span>
+                </div>
+
+                 <div class="stat-row">
+                    <div class="stat-data">
+                        <span class="stat-value">${nextPerson.turningAge - 1} db</span>
+                        <span class="stat-label">Elfogyasztott torta</span>
+                    </div>
+                    <span class="stat-emoji">🎂</span>
                 </div>
             </div>
         `;
 
-        // 3. A többiek listázása
+        // 3. A többiek listázása (Egyszerűsített design)
         const listContainer = document.getElementById('list-container');
         listContainer.innerHTML = ''; 
         
@@ -111,8 +130,8 @@ fetch('adatok.json')
             const div = document.createElement('div');
             div.className = 'list-item';
             div.innerHTML = `
-                <div class="name">${person.name} (${person.turningAge})</div>
-                <div class="days-badge">${person.daysLeft} nap</div>
+                <span class="name">${person.name} (${person.turningAge})</span>
+                <span class="days-left">${person.daysLeft} nap múlva</span>
             `;
             listContainer.appendChild(div);
         });
